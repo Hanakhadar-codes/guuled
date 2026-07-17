@@ -8,10 +8,12 @@ then
   exit
 fi
 
+# Haddii dooddu tahay nambar (atomic_number)
 if [[ $1 =~ ^[0-9]+$ ]]
 then
   ELEMENT_DATA=$($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements JOIN properties USING(atomic_number) JOIN types USING(type_id) WHERE atomic_number = $1;")
 else
+  # Haddii ay tahay summad ama magac (symbol/name)
   ELEMENT_DATA=$($PSQL "SELECT atomic_number, name, symbol, type, atomic_mass, melting_point_celsius, boiling_point_celsius FROM elements JOIN properties USING(atomic_number) JOIN types USING(type_id) WHERE symbol = '$1' OR name = '$1';")
 fi
 
@@ -24,7 +26,3 @@ else
     echo "The element with atomic number $ATOMIC_NUMBER is $NAME ($SYMBOL). It's a $TYPE, with a mass of $MASS amu. $NAME has a melting point of $MELTING celsius and a boiling point of $BOILING celsius."
   done
 fi
-# Feat
-# Fix
-# Refactor
-# Chore
